@@ -1,17 +1,24 @@
-import collection.Movie;
-import collection.UserInterface;
+import Collection.DequeMovieCollection;
+import MovieClasses.Movie;
+import commands.AddCommand;
 import commands.Command;
 import commands.CommandFetch;
-import commands.HelpCommand;
+import commands.InfoCommand;
+import factories.MovieFactory;
 
 import java.io.*;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
+        Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
-        String s = new Scanner(System.in).next();
-        Movie m = new Movie();
-        m.fill
+        DequeMovieCollection dequeMovieCollection = new DequeMovieCollection();
+        Command add = new AddCommand(dequeMovieCollection, cf);
+        Command info = new InfoCommand(dequeMovieCollection, cf);
+        while(true) {
+            cf.run(scan.nextLine());
+        }
+
     }
 }

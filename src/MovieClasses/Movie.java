@@ -1,8 +1,6 @@
-package collection;
+package MovieClasses;
 
-import java.util.Scanner;
-
-public class Movie implements Fillable {
+public class Movie{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -15,17 +13,16 @@ public class Movie implements Fillable {
     public Movie(){
 
     }
-    @Override
-    public Movie fill(Scanner scan ) {
-        System.out.println("Укажите название фильма");
-        setName(scan.nextLine());
-        System.out.println("Укажите количество оскаров ");
-        oscarsCount=scan.nextInt();
-        Coordinates coordinates= new Coordinates;
-        return this;
-    }
-    void setName(String str){
+    public void setName(String str){
         name=str;
     }
+    public String getName(){return name;}
+    public void setOscarsCount(int i){oscarsCount=i;}
+    public int getOscarsCount(){return oscarsCount;}
+    public void setCoordinates(Coordinates coords){coordinates=coords;}
+    public void setMovieGenre(MovieGenre mg){genre=mg;}
+    public void setMpaaRating(MpaaRating mpaar){mpaaRating=mpaar;}
+    public void setPerson(Person pers){screenwriter=pers;}
+
 }
 

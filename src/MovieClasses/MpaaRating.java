@@ -1,4 +1,4 @@
-package collection;
+package MovieClasses;
 
 public enum MpaaRating {
     G,
