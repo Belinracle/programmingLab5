@@ -1,9 +1,11 @@
 package factories;
 
+import Exceptions.WrongRangeException;
 import MovieClasses.*;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -25,7 +27,7 @@ public class MovieFactory {
         setMovieGenre();
         setMovieMpaaRating();
         setMoviePerson();
-//        scan.close();
+        scan.close();
         return movie;
     }
 
@@ -34,40 +36,90 @@ public class MovieFactory {
             movie.setName((par.get(1)));
         }
         else{
-            System.out.println("Введите название фильма");
-            movie.setName(scan.nextLine());
-        }
+                System.out.println("Введите название фильма");
+                String name= scan.nextLine();
+                if (name.isEmpty()){
+                    System.out.println("Имя не может быть пустым");
+                    setMovieName();
+                }
+                else {
+                    movie.setName(name);
+                }
+            }
     }
 
-    public void setMovieOscarCount() {
+    public void setMovieOscarCount(){
         System.out.println(par);
         if (par!=null){
             movie.setOscarsCount((Integer.parseInt(par.get(2))));
         }
         else
         {
-            System.out.println("Введите количество оскаров");
-            movie.setOscarsCount(scan.nextInt());
+            try{
+                System.out.println("Введите количество оскаров(Integer)");
+                int i = scan.nextInt();
+                if (i>=0) {
+                    movie.setOscarsCount(i);
+                }
+                else {
+                    System.out.println("Прости но введеное тобой значение не может быть меньше 0");
+                    setMovieOscarCount();
+                }
+            }
+            catch (InputMismatchException e){
+                System.out.println("Ты что дурак не знаешь типы данных? Ладно, еще одну попфытку тебе");
+                scan.nextLine();
+                setMovieOscarCount();
+            }
         }
     }
 
     public void setMovieCoords() {
         System.out.println("Введите значение координаты Х(Integer) и У(Float)");
-        movie.setCoordinates(new Coordinates(scan.nextInt(), scan.nextFloat()));
+        try {
+            int i = scan.nextInt();
+            if (i <= -928) {
+                System.out.println("Значение Х должно быть больше -928");
+                scan.nextLine();
+                setMovieCoords();
+            } else {
+                Float f = scan.nextFloat();
+                if (f >= 982) {
+                    System.out.println("Значение поля У должно быть меньше 982");
+                    scan.nextLine();
+                    setMovieCoords();
+                } else {
+                    movie.setCoordinates(new Coordinates(i, f));
+                    scan.nextLine();
+                }
+                }
+            }catch (InputMismatchException e) {
+            System.out.println("Несоответствие типов");
+            scan.nextLine();
+            setMovieCoords();
+        }
     }
+
 
     public void setMovieGenre() {
         System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"WESTERN" +"\n" +"COMEDY"+"\n"+"MUSICAL"+"\n"+"SCIENCE_FICTION");
-        String buf = scan.next();
+        String buf = scan.nextLine();
         switch (buf) {
             case "WESTERN":
                 movie.setMovieGenre(MovieGenre.WESTERN);
+                break;
             case "COMEDY":
                 movie.setMovieGenre(MovieGenre.COMEDY);
+                break;
             case "MUSICAL":
                 movie.setMovieGenre(MovieGenre.MUSICAL);
+                break;
             case "SCIENCE_FICTION":
                 movie.setMovieGenre(MovieGenre.SCIENCE_FICTION);
+                break;
+            default:
+                System.out.println("Пожалуйсто введите один из предложенных энамов");
+                setMovieGenre();
         }
     }
 
@@ -77,12 +129,19 @@ public class MovieFactory {
         switch (buf) {
             case "G":
                 movie.setMpaaRating(MpaaRating.G);
+                break;
             case "PG_13":
                 movie.setMpaaRating(MpaaRating.PG_13);
+                break;
             case "R":
                 movie.setMpaaRating(MpaaRating.R);
+                break;
             case "NC_17":
                 movie.setMpaaRating(MpaaRating.NC_17);
+                break;
+            default:
+                System.out.println("Пожалуйсто введите один из предложенных энамов");
+                setMovieMpaaRating();
         }
     }
 

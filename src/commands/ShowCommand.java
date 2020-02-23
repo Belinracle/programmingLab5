@@ -6,11 +6,11 @@ import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
-public class InfoCommand implements Command {
+public class ShowCommand implements Command {
     private CollectionShellInterface T;
-    public InfoCommand(CollectionShellInterface T,CommandFetch cf){
+    public ShowCommand(CollectionShellInterface T, CommandFetch cf){
         this.T=T;
-        cf.addCommand("Info",this);
+        cf.addCommand("show",this);
     }
     @Override
     public void execute(ArrayList<String> A) {

@@ -14,10 +14,12 @@ public class  CommandFetch {
     public void run(String str){
         ArrayList<String> words = new ArrayList<>(Arrays.asList(str.split(" ")));
         System.out.println(words);
-        if (words.size()>1){
-            commandMap.get(words.get(0)).execute(words);
-        }
-        commandMap.get(words.get(0)).execute(null);
+        
+            if (words.size() > 1) {
+                commandMap.get(words.get(0)).execute(words);
+            }
+            commandMap.get(words.get(0)).execute(null);
+
     }
     public void addCommand(String str,Command cmd){
         commandMap.put(str,cmd);
