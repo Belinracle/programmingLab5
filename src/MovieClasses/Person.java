@@ -5,12 +5,12 @@ public class Person {
     private int weight; //Значение поля должно быть больше 0
     private String passportID; //Поле не может быть null
     private Location location; //Поле не может быть null
-    public Person(String name, int weight, String passportID, Location loc){
-         this.name=name;
-         this.weight=weight;
-         this.passportID=passportID;
-         location=loc;
+    public Person(){
     }
+    public void setPersonName(String name){ this.name=name;}
+    public void setPersonWeight(int i){weight=i;}
+    public void setPassportID(String str){passportID=str;}
+    public void setLocation(Location loc){location=loc;}
 }
 
 

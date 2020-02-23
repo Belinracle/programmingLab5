@@ -1,8 +1,12 @@
 package commands;
 
+import java.awt.*;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.lang.reflect.Array;
+import java.util.ArrayList;
 import java.util.Scanner;
+import java.util.List;
 
 public class HelpCommand implements Command {
     private Scanner sc;
@@ -12,7 +16,7 @@ public class HelpCommand implements Command {
         sc = new Scanner(file);
     }
     @Override
-    public void execute(String str) {
+    public void execute(ArrayList<String> T) {
         while(sc.hasNext()) {
             System.out.println(sc.nextLine());
         }

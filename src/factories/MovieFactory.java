@@ -2,15 +2,20 @@ package factories;
 
 import MovieClasses.*;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 
 public class MovieFactory {
     private Scanner scan;
     private Movie movie;
+    private ArrayList<String> par;
 
-    public MovieFactory() {
+    public MovieFactory(ArrayList<String> T) {
         scan = new Scanner(System.in);
-         movie = new Movie();
+        movie = new Movie();
+        par=T;
     }
 
     public Movie createMovie() {
@@ -18,17 +23,32 @@ public class MovieFactory {
         setMovieOscarCount();
         setMovieCoords();
         setMovieGenre();
+        setMovieMpaaRating();
+        setMoviePerson();
+//        scan.close();
         return movie;
     }
 
     public void setMovieName() {
-        System.out.println("Введите название фильма");
-        movie.setName(scan.nextLine());
+        if (par!=null){
+            movie.setName((par.get(1)));
+        }
+        else{
+            System.out.println("Введите название фильма");
+            movie.setName(scan.nextLine());
+        }
     }
 
     public void setMovieOscarCount() {
-        System.out.println("Введите количество оскаров");
-        movie.setOscarsCount(scan.nextInt());
+        System.out.println(par);
+        if (par!=null){
+            movie.setOscarsCount((Integer.parseInt(par.get(2))));
+        }
+        else
+        {
+            System.out.println("Введите количество оскаров");
+            movie.setOscarsCount(scan.nextInt());
+        }
     }
 
     public void setMovieCoords() {
@@ -37,7 +57,7 @@ public class MovieFactory {
     }
 
     public void setMovieGenre() {
-        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"WESTERN" +"\n" +"COMEDY"+"\n"+"MUSICAL"+"SCIENCE_FICTION");
+        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"WESTERN" +"\n" +"COMEDY"+"\n"+"MUSICAL"+"\n"+"SCIENCE_FICTION");
         String buf = scan.next();
         switch (buf) {
             case "WESTERN":
@@ -52,8 +72,9 @@ public class MovieFactory {
     }
 
     public void setMovieMpaaRating() {
-        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"G" +"\n" +"PG_13"+"\n"+"R"+"NC_17");
-        switch (scan.nextLine()) {
+        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"G" +"\n" +"PG_13"+"\n"+"R"+"\n"+"NC_17");
+        String buf = scan.next();
+        switch (buf) {
             case "G":
                 movie.setMpaaRating(MpaaRating.G);
             case "PG_13":
@@ -66,25 +87,8 @@ public class MovieFactory {
     }
 
     public void setMoviePerson() {
-        movie.setPerson(new Person(setMoviePersonName(), setMoviePersonWeight(), setMoviePersonPasssID(),setMoviePersonLoc() ));
-    }
-
-    public String setMoviePersonName() {
-        System.out.println("Введите имя Сценариста");
-        return scan.nextLine();
-    }
-
-    public int setMoviePersonWeight() {
-        System.out.println("Введите его вес (Integer)");
-        return scan.nextInt();
-    }
-    public String setMoviePersonPasssID(){
-        System.out.println("Введите eго пасспортный идентификатор");
-        return scan.nextLine();
-    }
-    public Location setMoviePersonLoc(){
-        System.out.println("Ввдите координаты х(Long) y(int) z(Float) и название(String) места расположения Сценариста");
-        return new Location(scan.nextLong(),scan.nextInt(),scan.nextFloat(),scan.nextLine());
+        movie.setPerson(new MoviePersonFactory().createMoviePerson());
     }
 }
+
 

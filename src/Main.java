@@ -16,9 +16,9 @@ public class Main {
         DequeMovieCollection dequeMovieCollection = new DequeMovieCollection();
         Command add = new AddCommand(dequeMovieCollection, cf);
         Command info = new InfoCommand(dequeMovieCollection, cf);
-        while(true) {
+        while(!scan.nextLine().equals("exit")) {
+            System.out.println("введите команду");
             cf.run(scan.nextLine());
         }
-
     }
 }
