@@ -1,6 +1,7 @@
 package commands;
 
 import Collection.CollectionShellInterface;
+import MovieClasses.Movie;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -14,6 +15,6 @@ public class ShowCommand implements Command {
     }
     @Override
     public void execute(ArrayList<String> A) {
-        System.out.println(T.toString());
+        T.show();
     }
 }

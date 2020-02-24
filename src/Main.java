@@ -1,27 +1,23 @@
 import Collection.DequeMovieCollection;
-import commands.AddCommand;
-import commands.Command;
-import commands.CommandFetch;
-import commands.ShowCommand;
+import commands.*;
 
 import java.io.*;
 import java.util.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException { //TODO прочитать по garbagecollector
         Scanner scan = new Scanner(System.in);
-        CommandFetch cf = new CommandFetch();
-        DequeMovieCollection dequeMovieCollection = new DequeMovieCollection();
-        Command add = new AddCommand(dequeMovieCollection, cf);
-        Command show = new ShowCommand(dequeMovieCollection, cf);
-        while(true) {
-            try {
-                System.out.println("введите команду");
-                cf.run(scan.nextLine());
-            }
-            catch(NullPointerException e) {
-                System.out.println("Нет такой команды, для просмотра информации о доступных командах введите Info");
-            }
+        ControlUnit cu = new ControlUnit();
+        ArrayDeque<String> deq=new ArrayDeque<>();
+        deq.addLast("1");
+        deq.addLast("2");
+        System.out.println(deq.getFirst());
+        System.out.println(deq.getLast());
+        while (true) {
+            System.out.println("Введите команду");
+            String i = scan.nextLine();
+            cu.process(i);
         }
+
     }
 }

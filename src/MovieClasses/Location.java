@@ -11,4 +11,14 @@ public class Location {
         this.z=z;
         this.name=name;
     }
+
+    @Override
+    public String toString() {
+        String str =
+                "Название места: "+name+"\n"+
+                "Координата Х: " +x+"\n"+
+                "Координата У: " +y+"\n"+
+                "Координата Z: " +z+"\n";
+        return str;
+    }
 }

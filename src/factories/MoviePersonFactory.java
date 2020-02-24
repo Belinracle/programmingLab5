@@ -12,11 +12,10 @@ public class MoviePersonFactory {
     }
     public Person createMoviePerson(){
         Person pers = new Person();
-        pers.setPersonName(persNameFact());
-        pers.setPersonWeight(persWeightFact());
-        pers.setPassportID(persPassIDFact());
+//        pers.setPersonName(persNameFact());
+//        pers.setPersonWeight(persWeightFact());
+//        pers.setPassportID(persPassIDFact());
         pers.setLocation(setPersLocation());
-        sc.close();
         return pers;
     }
     public String persNameFact(){
@@ -45,7 +44,7 @@ public class MoviePersonFactory {
             int i = sc.nextInt();
             sc.nextLine();
             return i;
-        } catch (InputMismatchException e) {
+        } catch (NumberFormatException e) {
             System.out.println("Ты что ебобо, тип неправильный, давай по новой");
             sc.nextLine();
             persWeightFact();
@@ -86,6 +85,11 @@ public class MoviePersonFactory {
             return 0;
         }
     }
+
+    public String setLocationName(){
+        System.out.println("Установите название этого места");
+        return sc.nextLine();
+    }
     public Float setLocFloat(){
         System.out.println("Установите координату Z(Float)");
         try{
@@ -93,20 +97,10 @@ public class MoviePersonFactory {
             sc.nextLine();
             return f;
         }catch(InputMismatchException e) {
-            sc.nextLine();
             System.out.println("Ты что ебобо, тип неправильный, давай по новой");
+            sc.nextLine();
             setLocFloat();
             return 0f;
-        }
-    }
-    public String setLocationName(){
-        System.out.println("Установите название этого места");
-        String str = sc.nextLine();
-        if(!str.isEmpty())
-            return str;
-        else {
-            setLocationName();
-            return null;
         }
     }
 }

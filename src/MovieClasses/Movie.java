@@ -1,6 +1,5 @@
 package MovieClasses;
-
-import Exceptions.WrongRangeException;
+import java.time.LocalDate;
 
 public class Movie{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
@@ -13,7 +12,7 @@ public class Movie{
     private Person screenwriter;
 
     public Movie(){
-
+        creationDate = LocalDate.now();
     }
     public void setName(String str){
         name=str;
@@ -25,6 +24,17 @@ public class Movie{
     public void setMovieGenre(MovieGenre mg){genre=mg;}
     public void setMpaaRating(MpaaRating mpaar){mpaaRating=mpaar;}
     public void setPerson(Person pers){screenwriter=pers;}
+    public void setID(long ID){id=ID;}
+    public long getID(){return id;}
+
+    @Override
+    public String toString() {
+        return "id: " + id + "\n"+
+                "name: " + name +"\n"+
+                "creation date: " + creationDate + "\n"+
+                "Coordination: " + coordinates ;
+    }
+
 
 }
 
