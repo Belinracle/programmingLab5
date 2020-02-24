@@ -27,10 +27,10 @@ public class MovieFactory {
         par=T;
         movie.setID(IDFactory.createID());
         setMovieName();
-//        setMovieOscarCount();
-//        setMovieCoords();
-//        setMovieGenre();
-//        setMovieMpaaRating();
+        setMovieOscarCount();
+        setMovieCoords();
+        setMovieGenre();
+        setMovieMpaaRating();
         setMoviePerson();
         System.out.println("Спасибо, фильм создан");
         return movie;
@@ -38,10 +38,10 @@ public class MovieFactory {
     public Movie updateID(Long ID) throws IOException {
         movie.setID(ID);
         setMovieName();
-//        setMovieOscarCount();
-//        setMovieCoords();
-//        setMovieGenre();
-//        setMovieMpaaRating();
+        setMovieOscarCount();
+        setMovieCoords();
+        setMovieGenre();
+        setMovieMpaaRating();
         setMoviePerson();
         System.out.println("Спасибо, фильм создан");
         return movie;

@@ -21,9 +21,25 @@ public class Movie{
     public void setOscarsCount(int i){oscarsCount=i;}
     public int getOscarsCount(){return oscarsCount;}
     public void setCoordinates(Coordinates coords){coordinates=coords;}
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
     public void setMovieGenre(MovieGenre mg){genre=mg;}
+    public MovieGenre getGenre() {
+        return genre;
+    }
     public void setMpaaRating(MpaaRating mpaar){mpaaRating=mpaar;}
+
+    public MpaaRating getMpaaRating() {
+        return mpaaRating;
+    }
+
     public void setPerson(Person pers){screenwriter=pers;}
+
+    public Person getScreenwriter() {
+        return screenwriter;
+    }
+
     public void setID(long ID){id=ID;}
     public long getID(){return id;}
 

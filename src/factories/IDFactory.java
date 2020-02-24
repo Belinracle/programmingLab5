@@ -1,6 +1,7 @@
 package factories;
 
 import WorkWithFile.FileWorker;
+import WorkWithFile.ID;
 
 import java.io.*;
 import java.util.Scanner;
@@ -9,10 +10,8 @@ public class IDFactory { //TODO подумать , нужно ли переда�
     private FileWorker iof;
     private long ID;
     private static long counter;
-    public IDFactory() throws IOException {
-        iof = new FileWorker();
-        ID=iof.readFileID();
-        counter=ID;
+    public IDFactory(FileWorker fw) throws IOException {
+        counter= Long.parseLong(fw.read());
     }
     public static long createID() throws IOException {
         return ++counter;

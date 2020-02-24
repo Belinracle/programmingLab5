@@ -12,9 +12,9 @@ public class MoviePersonFactory {
     }
     public Person createMoviePerson(){
         Person pers = new Person();
-//        pers.setPersonName(persNameFact());
-//        pers.setPersonWeight(persWeightFact());
-//        pers.setPassportID(persPassIDFact());
+        pers.setPersonName(persNameFact());
+        pers.setPersonWeight(persWeightFact());
+        pers.setPassportID(persPassIDFact());
         pers.setLocation(setPersLocation());
         return pers;
     }

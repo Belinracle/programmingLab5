@@ -1,8 +1,13 @@
 package Collection;
 
 import MovieClasses.Movie;
+import WorkWithFile.FileWorker;
+import WorkWithFile.ID;
+import WorkWithFile.Parser;
+import factories.IDFactory;
 import factories.MovieFactory;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.time.LocalDate;
@@ -30,6 +35,7 @@ public class DequeMovieCollection implements CollectionShellInterface{
         cal.clear();
     }
 
+
     @Override
     public void Remove_by_id() {
 
@@ -37,6 +43,9 @@ public class DequeMovieCollection implements CollectionShellInterface{
     @Override
     public void show() {
         cal.forEach(System.out::println);
+    }
+    public ArrayDeque getCal(){
+        return cal;
     }
 
     @Override
@@ -49,12 +58,16 @@ public class DequeMovieCollection implements CollectionShellInterface{
         while(cal.peekLast().getID()!=id){
             buf.addFirst(cal.removeLast());
         }
-         cal.addLast(mf.updateID(id));
         cal.removeLast();
+        cal.addLast(mf.updateID(id));
         while( buf.size()!=0){
             cal.addLast(buf.removeFirst());
-
         }
+    }
+    @Override
+    public void save(Parser parser, FileWorker id) throws FileNotFoundException {
+        parser.parseColl(cal);
+        id.write(String.valueOf(IDFactory.getCurrentID()));
     }
 
 }

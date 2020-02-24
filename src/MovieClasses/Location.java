@@ -12,6 +12,24 @@ public class Location {
         this.name=name;
     }
 
+    public Float getZ() {
+        return z;
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public long getX() {
+        return x;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+
+
     @Override
     public String toString() {
         String str =

@@ -8,6 +8,16 @@ public class Coordinates{
             this.x = x;
             this.y = y;
     }
+
+    public float getY() {
+        return y;
+    }
+
+    public Integer getX() {
+        return x;
+    }
+
+
     @Override
     public String toString() {
     return "x= "+x+ "\n"+

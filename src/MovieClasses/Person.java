@@ -12,6 +12,30 @@ public class Person {
     public void setPassportID(String str){passportID=str;}
     public void setLocation(Location loc){location=loc;}
 
+    public String getName() {
+        return name;
+    }
+
+    public int getWeight() {
+        return weight;
+    }
+
+    public Location getLocation() {
+        return location;
+    }
+
+    public String getPassportID() {
+        return passportID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setWeight(int weight) {
+        this.weight = weight;
+    }
+
     @Override
     public String toString() {
         String str="Имя сценариста:" +name+"\n"+
