@@ -13,7 +13,7 @@ import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Parser implements FileWorker {
+public class Parser{
     BufferedReader reader;
     String path;
     String[] FILE_HEADER = {"id", "Name", "oscCoun", "CX", "CY", "MPR", "G", "ScN", "ScId", "ScW", "ScLN", "ScLX", "ScLY", "ScLZ"};
@@ -23,39 +23,12 @@ public class Parser implements FileWorker {
         reader = new BufferedReader(new FileReader(path));
     }
 
-    @Override
-    public String read() {
-        return null;
-    }
-
-    @Override
-    public void write(String str) throws FileNotFoundException {
-        PrintWriter writer = new PrintWriter(path);
-        writer.write(str);
-        writer.close();
-    }
-
     public void parseColl(ArrayDeque<Movie> deq) {
-        String NEW_LINE_SEPARATOR = "\n";
         FileWriter fileWriter = null;
-
         CSVPrinter csvFilePrinter = null;
-
-        //Create the CSVFormat object with "\n" as a record delimiter
-        CSVFormat csvFileFormat = CSVFormat.DEFAULT.withRecordSeparator(NEW_LINE_SEPARATOR);
-
         try {
-
-            //initialize FileWriter object
-            fileWriter = new FileWriter(path);
-
-            //initialize CSVPrinter object
-            csvFilePrinter = new CSVPrinter(fileWriter, csvFileFormat);
-
-            //Create CSV file header
+            csvFilePrinter = new CSVPrinter(new FileWriter(path), CSVFormat.DEFAULT.withRecordSeparator("\n"));
             csvFilePrinter.printRecord(FILE_HEADER);
-
-            //Write a new student object list to the CSV file
             for (Movie movie : deq) {
                 List MovieDataRecord = new ArrayList();
                 MovieDataRecord.add(String.valueOf(movie.getID()));
@@ -107,30 +80,11 @@ public class Parser implements FileWorker {
             String ScLZ = "ScLZ";
 
                 FileReader fileReader = null;
-
                 CSVParser csvFileParser = null;
-
-                //Create the CSVFormat object with the header mapping
-                CSVFormat csvFileFormat = CSVFormat.DEFAULT.withHeader(FILE_HEADER);
-
                 try {
-
-                    //Create a new list of student to be filled by CSV file data
-                    List movies = new ArrayList();
-
-                    //initialize FileReader object
-                    fileReader = new FileReader(path);
-
-                    //initialize CSVParser object
-                    csvFileParser = new CSVParser(fileReader, csvFileFormat);
-
-                    //Get a list of CSV file records
-                    List csvRecords = csvFileParser.getRecords();
-
-                    //Read the CSV file records starting from the second record to skip the header
+                    List csvRecords = new CSVParser(new FileReader(path), CSVFormat.DEFAULT.withHeader(FILE_HEADER)).getRecords();
                     for (int i = 1; i < csvRecords.size(); i++) {
                         CSVRecord record = (CSVRecord) csvRecords.get(i);
-                        //Create a new student object and fill his data
                         Movie mov = new Movie();
                         mov.setID(Long.parseLong(record.get(id)));
                         mov.setMpaaRating(MpaaRating.valueOf(record.get(MPR)));
@@ -143,9 +97,8 @@ public class Parser implements FileWorker {
                         pers.setWeight(Integer.parseInt(record.get(ScW)));
                         pers.setLocation(new Location(record.get(ScLN),Long.parseLong(record.get(ScLX)),Integer.parseInt(record.get(ScLY)),Float.parseFloat(record.get(ScLZ))));
                         mov.setPerson(pers);
-                        movies.add(mov);
+                        deq.add(mov);
                     }
-                    deq.addAll(movies);
                 }
                 catch (Exception e) {
                     System.out.println("Error in CsvFileReader !!!");

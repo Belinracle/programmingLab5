@@ -1,7 +1,6 @@
 package Collection;
 
 import MovieClasses.Movie;
-import WorkWithFile.FileWorker;
 import WorkWithFile.ID;
 import WorkWithFile.Parser;
 import factories.IDFactory;
@@ -65,9 +64,8 @@ public class DequeMovieCollection implements CollectionShellInterface{
         }
     }
     @Override
-    public void save(Parser parser, FileWorker id) throws FileNotFoundException {
+    public void save(Parser parser) throws FileNotFoundException {
         parser.parseColl(cal);
-        id.write(String.valueOf(IDFactory.getCurrentID()));
     }
 
 }

@@ -10,12 +10,14 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
         ControlUnit cu = new ControlUnit(cf);
+        EnterReader enterReader = new EnterReader();
+        enterReader.readLong(10L, 0L,"залупа ");
         System.out.println(IDFactory.getCurrentID());
-        while (true) {
-            System.out.println("Введите команду");
-            String i = scan.nextLine();
-            cu.process(i);
-        }
+//        while (true) {
+//            System.out.println("Введите команду");
+//            String i = scan.nextLine();
+//            cu.process(i);
+//        }
 
     }
 }

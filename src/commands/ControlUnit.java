@@ -1,7 +1,6 @@
 package commands;
 
 import Collection.DequeMovieCollection;
-import WorkWithFile.FileWorker;
 import WorkWithFile.ID;
 import WorkWithFile.Parser;
 import factories.IDFactory;
@@ -18,7 +17,7 @@ public class ControlUnit {
     DequeMovieCollection dmc;
     InfoCommand info;
     UpdateIDCommand update;
-    FileWorker  id;
+    ID  id;
     SaveCommand save;
     Parser parser;
     LoadCommand load;
