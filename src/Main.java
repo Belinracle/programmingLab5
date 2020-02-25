@@ -11,8 +11,6 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
         ControlUnit cu = new ControlUnit(cf);
-        EnterReader reader=new EnterReader();
-        reader.readLong(null,null,"Залупа");
         try {
             while (true) {
                 System.out.println("Введите команду");

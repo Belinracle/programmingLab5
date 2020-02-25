@@ -55,16 +55,7 @@ public class MovieFactory {
             movie.setName((par.get(1)));
         }
         else{
-            System.out.println("Введите название фильма");
-            String name=scan.readLine();
-            System.out.println(name);
-                if (name.isEmpty()){
-                    System.out.println("Имя не может быть пустым");
-                    setMovieName();
-                }
-                else {
-                    movie.setName(name);
-                }
+            movie.setName(reader.readString("название фильма",false));
             }
     }
 
@@ -74,24 +65,7 @@ public class MovieFactory {
         }
         else
         {
-            try{
-                System.out.println("Введите количество оскаров(Integer)");
-                String i;
-                do{i= scan.readLine();}
-                while(i.isEmpty());
-                int inti=Integer.parseInt(i);
-                if (inti>=0) {
-                    movie.setOscarsCount(inti);
-                }
-                else {
-                    System.out.println("Прости но введеное тобой значение не может быть меньше 0");
-                    setMovieOscarCount();
-                }
-            }
-            catch (NumberFormatException | IOException e){
-                System.out.println("Ты что дурак не знаешь типы данных? Ладно, еще одну попфытку тебе");
-                setMovieOscarCount();
-            }
+            movie.setOscarsCount(reader.readInteger(Integer.MAX_VALUE,0,"количество оскаров"));
         }
     }
 
