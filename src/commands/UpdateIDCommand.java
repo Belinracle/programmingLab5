@@ -14,7 +14,7 @@ public class UpdateIDCommand implements Command { //TODO исправить ра
         this.cf= cf;
         this.cal= cal;
         cf.addCommand("update",this);
-        mf=new MovieFactory();
+        mf=new MovieFactory(new EnterReader());
     }
     @Override
     public void execute(ArrayList<String> T) throws IOException {

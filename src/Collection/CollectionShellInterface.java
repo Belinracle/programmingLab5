@@ -1,13 +1,12 @@
 package Collection;
 
 import MovieClasses.Movie;
-import WorkWithFile.ID;
-import WorkWithFile.Parser;
+import Parsers.Parser;
 import factories.MovieFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
+import java.util.Collection;
 
 public interface CollectionShellInterface {
     void add(Movie movie);
@@ -17,4 +16,5 @@ public interface CollectionShellInterface {
     void show();
     void info();
     void updateByID(Long id, MovieFactory mf) throws IOException;
+    Collection getCol();
 }

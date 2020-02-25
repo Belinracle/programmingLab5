@@ -1,18 +1,14 @@
 package Collection;
 
 import MovieClasses.Movie;
-import WorkWithFile.ID;
-import WorkWithFile.Parser;
-import factories.IDFactory;
+import Parsers.Parser;
 import factories.MovieFactory;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Date;
+import java.util.Collection;
 
 public class DequeMovieCollection implements CollectionShellInterface{
     ArrayDeque<Movie> cal;
@@ -63,9 +59,15 @@ public class DequeMovieCollection implements CollectionShellInterface{
             cal.addLast(buf.removeFirst());
         }
     }
+
+    @Override
+    public Collection<Movie> getCol() {
+        return cal;
+    }
+
     @Override
     public void save(Parser parser) throws FileNotFoundException {
-        parser.parseColl(cal);
+       //.write();
     }
 
 }

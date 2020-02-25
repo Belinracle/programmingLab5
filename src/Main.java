@@ -1,4 +1,5 @@
 import Collection.DequeMovieCollection;
+import Exceptions.Exit;
 import commands.*;
 import factories.IDFactory;
 
@@ -10,14 +11,18 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
         ControlUnit cu = new ControlUnit(cf);
-        EnterReader enterReader = new EnterReader();
-        enterReader.readLong(10L, 0L,"залупа ");
-        System.out.println(IDFactory.getCurrentID());
-//        while (true) {
-//            System.out.println("Введите команду");
-//            String i = scan.nextLine();
-//            cu.process(i);
-//        }
-
+        EnterReader reader=new EnterReader();
+        reader.readLong(null,null,"Залупа");
+        try {
+            while (true) {
+                System.out.println("Введите команду");
+                String i = scan.nextLine().trim();
+                if (!i.isEmpty()) {
+                    cu.process(i);
+                } else continue;
+            }
+        }catch (Exit e){
+            System.out.println(e.getMessage());
+        }
     }
 }

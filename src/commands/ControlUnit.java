@@ -1,13 +1,13 @@
 package commands;
 
 import Collection.DequeMovieCollection;
-import WorkWithFile.ID;
-import WorkWithFile.Parser;
+import Parsers.Parser;
+import Parsers.ParserCSV;
+import ReadWriteSome.FileWorker;
+import ReadWriteSome.ReadWrite;
 import factories.IDFactory;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.NoSuchElementException;
 
 public class ControlUnit {
     Command add;
@@ -17,23 +17,22 @@ public class ControlUnit {
     DequeMovieCollection dmc;
     InfoCommand info;
     UpdateIDCommand update;
-    ID  id;
     SaveCommand save;
-    Parser parser;
+    ParserCSV parserCSV;
     LoadCommand load;
     public ControlUnit(CommandFetch cf) throws IOException { //TODO передавать реализацию CommandFetch
         this.cf = cf;
-        id= new ID("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//IdContainer.txt");
         dmc= new DequeMovieCollection();
-        parser = new Parser("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//Save.txt",dmc);
-        add = new AddCommand(dmc, cf);
+        EnterReader enterReader = new EnterReader();
+        FileWorker fw= new FileWorker("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//Save.txt",dmc);
+        add = new AddCommand(dmc, cf, enterReader);
         show = new ShowCommand(dmc, cf);
         info= new InfoCommand(cf,dmc);
         help = new HelpCommand(cf, "C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//SomeFile.txt");
         update = new UpdateIDCommand(cf,dmc);
-        save= new SaveCommand(parser,id,cf,dmc);
-        load = new LoadCommand(cf,parser,dmc);
-        IDFactory idFac = new IDFactory(id);
+        IDFactory idFac = new IDFactory("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//IdContainer.txt");
+        save= new SaveCommand(fw,idFac,cf);
+        load = new LoadCommand(cf, fw ,dmc);
     }
     public void process(String str) throws IOException {
         try{

@@ -3,6 +3,7 @@ package factories;
 import Exceptions.WrongRangeException;
 import MovieClasses.*;
 import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import commands.EnterReader;
 
 import java.io.*;
 import java.lang.reflect.Array;
@@ -16,11 +17,13 @@ public class MovieFactory {
     private BufferedReader scan;
     private Movie movie;
     private ArrayList<String> par;
-    public MovieFactory() throws IOException {
+    private EnterReader reader;
+    public MovieFactory(EnterReader reader) throws IOException {
         InputStream inputStream = System.in;
         Reader inputStreamReader = new InputStreamReader(inputStream);
         scan = new BufferedReader(inputStreamReader);
         movie = new Movie();
+        this.reader=reader;
     }
 
     public Movie createMovie(ArrayList<String> T) throws IOException {
