@@ -1,18 +1,19 @@
 package commands;
 
 import Collection.CollectionShellInterface;
+import factories.MovieFactory;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class ClearCommand implements Command{
+public class AddIfMaxCommand implements Command {
     private CollectionShellInterface cal;
-    ClearCommand(CollectionShellInterface cal,CommandFetch cf){
-        cf.addCommand("clear",this);
+    AddIfMaxCommand(CollectionShellInterface cal, CommandFetch cf){
         this.cal=cal;
+        cf.addCommand("add_if_max",this);
     }
     @Override
     public void execute(ArrayList<String> T) throws IOException {
-        cal.clear();
+        cal.addIfMax(new MovieFactory().createMovie(T));
     }
 }

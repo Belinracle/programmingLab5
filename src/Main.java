@@ -1,5 +1,5 @@
 import Collection.DequeMovieCollection;
-import Exceptions.Exit;
+
 import commands.*;
 import factories.IDFactory;
 
@@ -8,7 +8,6 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException { //TODO прочитать по garbagecollector
-        System.out.println("Application Terminating ...");
         Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
         ControlUnit cu = new ControlUnit(cf);

@@ -1,6 +1,7 @@
 package Collection;
 
 import MovieClasses.Movie;
+import MovieClasses.Person;
 import Parsers.Parser;
 import factories.MovieFactory;
 
@@ -17,4 +18,7 @@ public interface CollectionShellInterface {
     Collection getCol();
     void removeByID(Long id);
     void removeFirst();
+    void addIfMax(Movie movie);
+    void addIfMin(Movie movie);
+    void removeAllBySc(Person person);
 }

@@ -31,7 +31,7 @@ import java.util.List;
                 buffList.addAll(deq.getCol());
                 for(int i = 0; i<deq.getCol().size(); i++ ){
                     Movie movie = buffList.get(i);
-                    List MovieDataRecord = new ArrayList();
+                    ArrayList MovieDataRecord = new ArrayList();
                     MovieDataRecord.add(String.valueOf(movie.getID()));
                     MovieDataRecord.add(movie.getName());
                     MovieDataRecord.add(String.valueOf(movie.getOscarsCount()));

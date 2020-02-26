@@ -1,6 +1,7 @@
 package Collection;
 
 import MovieClasses.Movie;
+import MovieClasses.Person;
 import Parsers.Parser;
 import factories.MovieFactory;
 
@@ -8,8 +9,11 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.NoSuchElementException;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class DequeMovieCollection implements CollectionShellInterface{
     private ArrayDeque<Movie> cal;
@@ -51,7 +55,8 @@ public class DequeMovieCollection implements CollectionShellInterface{
                     cal.addLast(buf.removeFirst());
                 }
             }catch (NoSuchElementException e){
-            System.out.println("Коллекция пуста, что вы блин хотите обновить");
+            System.out.println("В коллекции нет Фильма с таким ID");
+            cal.addAll(buf);
         }
     }
 
@@ -84,12 +89,55 @@ public class DequeMovieCollection implements CollectionShellInterface{
     }
 
     @Override
+    public void addIfMax(Movie movie) {
+        try {
+            if (cal.getLast().getName().compareToIgnoreCase(movie.getName()) < 0) {
+                cal.addLast(movie);
+            }
+        }catch (NoSuchElementException e){
+            System.out.println("Коллекция пуста");
+        }
+    }
+
+    @Override
+    public void addIfMin(Movie movie) {
+        try {
+            if (cal.getFirst().getName().compareToIgnoreCase(movie.getName()) > 0) {
+                cal.addLast(movie);
+            }
+        }catch (NoSuchElementException e){
+            System.out.println("Коллекция пуста");
+        }
+    }
+
+    @Override
+    public void removeAllBySc(Person person) {
+        try {
+            ArrayList<Long> toDel = new ArrayList<>();
+            for (Movie movie : cal) {
+                System.out.println("tak blya");
+                if (movie.getScreenwriter().equals(person)) {
+                    System.out.println("tak blya");
+                    toDel.add(movie.getID());
+                }
+            }
+            for (Long id : toDel) {
+                removeByID(id);
+            }
+        }catch (NullPointerException e){
+            System.out.println("u blya");
+        }
+    }
+
+
+    @Override
     public void add(Movie movie) {
             while (cal.size()!=0&&cal.getLast().getName().compareToIgnoreCase(movie.getName()) > 0) {
                 buf.addFirst(cal.removeLast());
             }
-            cal.add(movie);
+            cal.addLast(movie);
             cal.addAll(buf);
             buf.clear();
     }
+
 }

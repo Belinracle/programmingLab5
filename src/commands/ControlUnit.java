@@ -10,32 +10,26 @@ import factories.IDFactory;
 import java.io.IOException;
 
 public class ControlUnit {
-    private Command add;
-    private Command show;
-    private Command help;
     private CommandFetch cf;
-    private DequeMovieCollection dmc;
-    private InfoCommand info;
-    private UpdateIDCommand update;
-    private SaveCommand save;
-    ParserCSV parserCSV;
-    private LoadCommand load;
-    private RemoveFirstComman remFirst;
-    private Remove_by_idCommand removeID;
     public ControlUnit(CommandFetch cf) throws IOException { //TODO передавать реализацию CommandFetch
         this.cf = cf;
-        dmc= new DequeMovieCollection();
-        FileWorker fw= new FileWorker("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//Save.txt",dmc);
-        add = new AddCommand(dmc, cf);
-        show = new ShowCommand(dmc, cf);
-        info= new InfoCommand(cf,dmc);
-        help = new HelpCommand(cf, "C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//SomeFile.txt");
-        update = new UpdateIDCommand(cf,dmc);
+        DequeMovieCollection dmc = new DequeMovieCollection();
+        FileWorker fw= new FileWorker("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//Save.txt", dmc);
+        Command add = new AddCommand(dmc, cf);
+        Command show = new ShowCommand(dmc, cf);
+        Command info = new InfoCommand(cf, dmc);
+        Command help = new HelpCommand(cf, "C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//SomeFile.txt");
+        Command update = new UpdateIDCommand(cf, dmc);
         IDFactory idFac = new IDFactory("C://Users//Даниэль//Desktop//Лабораторные//programming//Lab5//IdContainer.txt");
-        save= new SaveCommand(fw,idFac,cf);
-        load = new LoadCommand(cf, fw ,dmc);
-        remFirst = new RemoveFirstComman(dmc,cf);
-        removeID=new Remove_by_idCommand(cf,dmc);
+        Command save = new SaveCommand(fw, idFac, cf);
+        Command load = new LoadCommand(cf, fw, dmc);
+        Command remFirst = new RemoveFirstComman(dmc, cf);
+        Command removeID = new Remove_by_idCommand(cf, dmc);
+        Command clear = new ClearCommand(dmc, cf);
+        Command exit = new ExitCommand(cf);
+        Command addIfMax = new AddIfMaxCommand(dmc,cf);
+        Command addIfMin = new AddIfMinCommand(dmc,cf);
+        Command removeSc = new RemoveAllByScCommand(dmc,cf);
     }
     public void process(String str) throws IOException {
         try{

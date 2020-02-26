@@ -7,13 +7,13 @@ import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-class MoviePersonFactory {
+public class MoviePersonFactory {
     private Scanner scan;
-    MoviePersonFactory(){
+    public MoviePersonFactory(){
         scan=new Scanner(System.in);
     }
 
-    Person createMoviePerson(){
+    public Person createMoviePerson(){
         Person pers = new Person();
         persNameFact(pers);
         persWeightFact(pers);

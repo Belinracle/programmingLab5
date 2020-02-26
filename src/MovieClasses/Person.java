@@ -36,6 +36,22 @@ public class Person {
         this.weight = weight;
     }
 
+    public boolean equals(Person anPers) {
+        System.out.println("tak blya");
+        boolean b=weight==anPers.weight;
+        System.out.println("tak blyat");
+        System.out.println(passportID);
+        boolean f=passportID.equals(anPers.getPassportID());
+        System.out.println("tak blya");
+        boolean a=name.equals(anPers.name)&&location.getName().equals(anPers.location.getName());
+        System.out.println("tak blya");
+        boolean c=location.getX()==anPers.location.getX()&&location.getY()==anPers.location.getY();
+        System.out.println("tak blya");
+        boolean d=location.getZ().equals(anPers.location.getZ());
+        System.out.println("tak blya");
+        return b;
+    }
+
     @Override
     public String toString() {
         String str="Имя сценариста:" +name+"\n"+
