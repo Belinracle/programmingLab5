@@ -16,17 +16,16 @@ import java.util.List;
 
     public class ParserCSV implements Parser {
         BufferedReader reader;
-        String[] FILE_HEADER = {"id", "Name", "oscCoun", "CX", "CY", "MPR", "G", "ScN", "ScId", "ScW", "ScLN", "ScLX", "ScLY", "ScLZ"};
-        CollectionShellInterface deq;
-        public ParserCSV(CollectionShellInterface deq) throws FileNotFoundException {
+        private String[] FILE_HEADER = {"id", "Name", "oscCoun", "CX", "CY", "MPR", "G", "ScN", "ScId", "ScW", "ScLN", "ScLX", "ScLY", "ScLZ"};
+        private CollectionShellInterface deq;
+        public ParserCSV(CollectionShellInterface deq) {
             this.deq=deq;
         }
 
         public String ser () {
-            CSVPrinter csvFilePrinter = null;
             try {
                 StringBuilder sb= new StringBuilder();
-                csvFilePrinter = new CSVPrinter(sb, CSVFormat.DEFAULT.withRecordSeparator("\n"));
+                CSVPrinter csvFilePrinter = new CSVPrinter(sb, CSVFormat.DEFAULT.withRecordSeparator("\n"));
                 csvFilePrinter.printRecord(FILE_HEADER);
                 List<Movie> buffList = new ArrayList<>();
                 buffList.addAll(deq.getCol());
@@ -79,14 +78,24 @@ import java.util.List;
                     Movie mov = new Movie();
                     mov.setID(Long.parseLong(record.get(id)));
                     mov.setMpaaRating(MpaaRating.valueOf(record.get(MPR)));
-                    mov.setMovieGenre(MovieGenre.valueOf(record.get(G)));
+                    if (record.get(G).isEmpty())
+                        mov.setMovieGenre(null);
+                    else{ mov.setMovieGenre(MovieGenre.valueOf(record.get(G)));}
                     mov.setOscarsCount(Integer.parseInt(record.get(oscCoun)));
                     mov.setName(record.get(name));
-                    mov.setCoordinates(new Coordinates(Integer.parseInt(record.get(CX)),Float.parseFloat(record.get(CY))));
+                    Coordinates coords=new Coordinates();
+                    coords.setX(Integer.parseInt(record.get(CX)));
+                    coords.setY(Float.parseFloat(record.get(CY)));
+                    mov.setCoordinates(coords);
                     Person pers= new Person();
                     pers.setPersonName(record.get(ScN));
                     pers.setWeight(Integer.parseInt(record.get(ScW)));
-                    pers.setLocation(new Location(record.get(ScLN),Long.parseLong(record.get(ScLX)),Integer.parseInt(record.get(ScLY)),Float.parseFloat(record.get(ScLZ))));
+                    Location loc= new Location();
+                    loc.setName(record.get(ScLN));
+                    loc.setX(Long.parseLong(record.get(ScLX)));
+                    loc.setY(Integer.parseInt(record.get(ScLY)));
+                    loc.setZ(Float.parseFloat(record.get(ScLZ)));
+                    pers.setLocation(loc);
                     mov.setPerson(pers);
                     deq.add(mov);
                 }

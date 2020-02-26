@@ -9,11 +9,12 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayDeque;
 import java.util.Collection;
+import java.util.NoSuchElementException;
 
 public class DequeMovieCollection implements CollectionShellInterface{
-    ArrayDeque<Movie> cal;
-    LocalDate creationDate;
-    ArrayDeque<Movie> buf;
+    private ArrayDeque<Movie> cal;
+    private LocalDate creationDate;
+    private ArrayDeque<Movie> buf;
     public DequeMovieCollection(){
         cal=new ArrayDeque<>();
         creationDate = LocalDate.now();
@@ -21,20 +22,10 @@ public class DequeMovieCollection implements CollectionShellInterface{
     }
 
     @Override
-    public void add(Movie movie) {
-        cal.add(movie);
-    }
-
-    @Override
     public void clear() {
         cal.clear();
     }
 
-
-    @Override
-    public void Remove_by_id() {
-
-    }
     @Override
     public void show() {
         cal.forEach(System.out::println);
@@ -49,14 +40,18 @@ public class DequeMovieCollection implements CollectionShellInterface{
     }
 
     @Override
-    public void updateByID(Long id, MovieFactory mf) throws IOException {
-        while(cal.peekLast().getID()!=id){
-            buf.addFirst(cal.removeLast());
-        }
-        cal.removeLast();
-        cal.addLast(mf.updateID(id));
-        while( buf.size()!=0){
-            cal.addLast(buf.removeFirst());
+    public void updateByID(Long id) throws IOException {
+        try {
+            while (cal.getLast().getID() != id) {
+                buf.addFirst(cal.removeLast());
+            }
+                cal.removeLast();
+                add(new MovieFactory().updateID(id));
+                while (buf.size() != 0) {
+                    cal.addLast(buf.removeFirst());
+                }
+            }catch (NoSuchElementException e){
+            System.out.println("Коллекция пуста, что вы блин хотите обновить");
         }
     }
 
@@ -66,8 +61,35 @@ public class DequeMovieCollection implements CollectionShellInterface{
     }
 
     @Override
-    public void save(Parser parser) throws FileNotFoundException {
-       //.write();
+    public void removeByID(Long id) {
+        try {
+            while (cal.getLast().getID() != id) {
+                buf.addFirst(cal.removeLast());
+            }
+            cal.removeLast();
+            cal.addAll(buf);
+            buf.clear();
+        }catch(NoSuchElementException |NullPointerException e){
+            System.out.println("Элемента с таким ID нет в коллекции");
+        }
     }
 
+    @Override
+    public void removeFirst() {
+        try {
+            cal.removeFirst();
+        }catch(NoSuchElementException e){
+            System.out.println("Коллекция пуста");
+        }
+    }
+
+    @Override
+    public void add(Movie movie) {
+            while (cal.size()!=0&&cal.getLast().getName().compareToIgnoreCase(movie.getName()) > 0) {
+                buf.addFirst(cal.removeLast());
+            }
+            cal.add(movie);
+            cal.addAll(buf);
+            buf.clear();
+    }
 }

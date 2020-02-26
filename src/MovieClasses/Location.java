@@ -5,13 +5,20 @@ public class Location {
     private int y;
     private Float z; //Поле не может быть null
     private String name; //Поле может быть null
-    public Location( String name,long x, int y, Float z){
-        this.x=x;
-        this.y=y;
-        this.z=z;
+    public Location(){
+    }
+    public void setX(long l){
+            x=l;
+    }
+    public void setY(int i){
+        y=i;
+    }
+    public void setZ(Float f){
+        z=f;
+    }
+    public void setName(String name){
         this.name=name;
     }
-
     public Float getZ() {
         return z;
     }
@@ -28,15 +35,11 @@ public class Location {
         return name;
     }
 
-
-
     @Override
     public String toString() {
-        String str =
-                "Название места: "+name+"\n"+
+        return  "Название места: "+name+"\n"+
                 "Координата Х: " +x+"\n"+
                 "Координата У: " +y+"\n"+
                 "Координата Z: " +z+"\n";
-        return str;
     }
 }

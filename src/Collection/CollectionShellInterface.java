@@ -11,10 +11,10 @@ import java.util.Collection;
 public interface CollectionShellInterface {
     void add(Movie movie);
     void clear();
-    void save(Parser parser) throws FileNotFoundException;
-    void Remove_by_id();
     void show();
     void info();
-    void updateByID(Long id, MovieFactory mf) throws IOException;
+    void updateByID(Long id) throws IOException;
     Collection getCol();
+    void removeByID(Long id);
+    void removeFirst();
 }

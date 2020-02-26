@@ -7,9 +7,9 @@ import Parsers.Parser;
 import Parsers.ParserCSV;
 
 public class FileWorker implements ReadWrite{
-    CollectionShellInterface cal;
-    BufferedReader reader;
-    String path;
+    private CollectionShellInterface cal;
+    private BufferedReader reader;
+    private String path;
     public FileWorker(String path, CollectionShellInterface cal) throws FileNotFoundException {
         this.cal=cal;
         this.path=path;
@@ -17,11 +17,9 @@ public class FileWorker implements ReadWrite{
         reader = new BufferedReader(new FileReader(path));
     }
     @Override
-    public void read() throws FileNotFoundException {
+    public void read(){
         Parser parser = new ParserCSV(cal);
-        System.out.println("1");
         parser.deSer(path);
-        System.out.println("2");
     }
 
     @Override

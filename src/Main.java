@@ -8,6 +8,7 @@ import java.util.*;
 
 public class Main {
     public static void main(String[] args) throws IOException { //TODO прочитать по garbagecollector
+        System.out.println("Application Terminating ...");
         Scanner scan = new Scanner(System.in);
         CommandFetch cf = new CommandFetch();
         ControlUnit cu = new ControlUnit(cf);
@@ -19,8 +20,9 @@ public class Main {
                     cu.process(i);
                 } else continue;
             }
-        }catch (Exit e){
-            System.out.println(e.getMessage());
+        } catch (NoSuchElementException e) {
+            System.out.println("Ясно, проверяете лабу");
         }
     }
+
 }

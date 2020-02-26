@@ -3,104 +3,113 @@ package factories;
 import MovieClasses.Location;
 import MovieClasses.Person;
 
+import java.io.IOException;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
-public class MoviePersonFactory {
-    Scanner sc = new Scanner(System.in);
+class MoviePersonFactory {
+    private Scanner scan;
     MoviePersonFactory(){
+        scan=new Scanner(System.in);
     }
-    public Person createMoviePerson(){
+
+    Person createMoviePerson(){
         Person pers = new Person();
-        pers.setPersonName(persNameFact());
-        pers.setPersonWeight(persWeightFact());
-        pers.setPassportID(persPassIDFact());
+        persNameFact(pers);
+        persWeightFact(pers);
+        persPassIDFact(pers);
         pers.setLocation(setPersLocation());
         return pers;
     }
-    public String persNameFact(){
-        System.out.println("Введите имя Сценариста Фильма");
-        String name=sc.nextLine();
-        if (name.isEmpty()){
-            System.out.println("Имя не может быть пустым");
-            persNameFact();
-            return null;
-        }
-        else return name;
+    private void persNameFact(Person pers){
+        System.out.println("Введите имя сценариста");
+        String entered = scan.nextLine().trim();
+        if (!entered.isEmpty()) {
+            pers.setPersonName(entered);
+        } else persNameFact(pers);
     }
-    public String persPassIDFact(){
-        System.out.println("Введите его паспортный идентификатор");
-        String buf = sc.nextLine();
-        if (buf.isEmpty()) {
-            System.out.println("Паспортный идентификатор не может быть пустым");
-            persPassIDFact();
-            return null;
-        }
-        return buf;
+    private void persPassIDFact(Person pers){
+        System.out.println("Введите Паспортный идентификатор сценариста");
+        String entered = scan.nextLine().trim();
+        if (!entered.isEmpty()) {
+            pers.setPassportID(entered);
+        } else persNameFact(pers);
     }
-    public int persWeightFact() {
-        System.out.println("Введите его вес(Integer) ");
+    private void persWeightFact(Person pers) {
+        System.out.println("Введите вес сценариста фильма(должно быть больше 0)");
         try {
-            int i = sc.nextInt();
-            sc.nextLine();
-            return i;
-        } catch (NumberFormatException e) {
-            System.out.println("Ты что ебобо, тип неправильный, давай по новой");
-            sc.nextLine();
-            persWeightFact();
-            return 0;
+            String entered=scan.nextLine().trim();
+            while (entered.isEmpty()){
+                persWeightFact(pers);
+            }
+            int result =Integer.parseInt(entered);
+            if(result<0){
+                System.out.println("Введенное вами значение должно быть больше 0");
+                persWeightFact(pers);
+            }
+            else {pers.setWeight(result);}
+        }catch (NumberFormatException e){
+            System.out.println("Введеное значение не того формата");
+            persWeightFact(pers);
         }
     }
 
 
-    public Location setPersLocation(){
+    private Location setPersLocation(){
         System.out.println("Заполните поля локации проживания сценариста фильма ");
-        Location loc = new Location(setLocationName(),setLocationX(),setLocationY(),setLocFloat());
+        Location loc = new Location();
+        setLocationName(loc);
+        setLocationX(loc);
+        setLocationY(loc);
+        setLocFloat(loc);
         return loc;
     }
-    public long setLocationX(){
-        System.out.println("Установите координату Х(Long)");
+    private void setLocationX(Location loc){
+        System.out.println("Введите координату Х(long)");
         try {
-            Long l = sc.nextLong();
-            sc.nextLine();
-            return l;
-        }
-        catch (InputMismatchException e){
-            System.out.println("Ты что ебобо, тип неправильный, давай по новой");
-            sc.nextLine();
-            setLocationX();
-            return 0;
+            String entered=scan.nextLine().trim();
+            while (entered.isEmpty()){
+                setLocationX(loc);
+            }
+            long result =Long.parseLong(entered);
+            loc.setX(result);
+        }catch (NumberFormatException e ){
+            System.out.println("Введеное значение не того формата");
+            setLocationX(loc);
         }
     }
-    public int setLocationY(){
-        System.out.println("Установите координату У(Integer)");
-        try{
-            int i=sc.nextInt();
-            sc.nextLine();
-            return i;
-        }catch(InputMismatchException e){
-            System.out.println("Ты что ебобо, тип неправильный, давай по новой");
-            sc.nextLine();
-            setLocationY();
-            return 0;
+    private void setLocationY(Location loc) {
+        System.out.println("Введите координату Y(int)");
+        try {
+            String entered = scan.nextLine().trim();
+            while (entered.isEmpty()) {
+                setLocationY(loc);
+            }
+            int result = Integer.parseInt(entered);
+            loc.setY(result);
+        } catch (NumberFormatException e) {
+            System.out.println("Введеное значение не того формата");
+            setLocationY(loc);
         }
     }
 
-    public String setLocationName(){
-        System.out.println("Установите название этого места");
-        return sc.nextLine();
+    private void setLocationName(Location loc){
+            System.out.println("Введите название локации(может быть null)");
+            String entered = scan.nextLine().trim();
+            loc.setName(entered);
     }
-    public Float setLocFloat(){
-        System.out.println("Установите координату Z(Float)");
-        try{
-            Float f = sc.nextFloat();
-            sc.nextLine();
-            return f;
-        }catch(InputMismatchException e) {
-            System.out.println("Ты что ебобо, тип неправильный, давай по новой");
-            sc.nextLine();
-            setLocFloat();
-            return 0f;
+    private void setLocFloat(Location loc){
+        System.out.println("Введите координату Z(float)");
+        try {
+            String entered = scan.nextLine().trim();
+            while (entered.isEmpty()) {
+                setLocFloat(loc);
+            }
+            float result = Float.parseFloat(entered);
+            loc.setZ(result);
+        } catch (NumberFormatException e) {
+            System.out.println("Введеное значение не того формата");
+            setLocFloat(loc);
         }
     }
 }
