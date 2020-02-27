@@ -11,6 +11,6 @@ public class ExitCommand implements Command {
     }
     @Override
     public void execute(ArrayList<String> T) throws IOException {
-        System.exit(1);
+        System.exit(0);
     }
 }

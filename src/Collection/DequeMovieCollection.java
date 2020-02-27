@@ -8,10 +8,7 @@ import factories.MovieFactory;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.NoSuchElementException;
+import java.util.*;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
@@ -113,17 +110,8 @@ public class DequeMovieCollection implements CollectionShellInterface{
     @Override
     public void removeAllBySc(Person person) {
         try {
-            ArrayList<Long> toDel = new ArrayList<>();
-            for (Movie movie : cal) {
-                System.out.println("tak blya");
-                if (movie.getScreenwriter().equals(person)) {
-                    System.out.println("tak blya");
-                    toDel.add(movie.getID());
-                }
-            }
-            for (Long id : toDel) {
-                removeByID(id);
-            }
+            List<Long> toDel = cal.stream().filter(x->x.getScreenwriter().equals(person)).map(Movie::getID).collect(Collectors.toList());
+            toDel.forEach(this::removeByID);
         }catch (NullPointerException e){
             System.out.println("u blya");
         }

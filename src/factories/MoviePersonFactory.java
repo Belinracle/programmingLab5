@@ -31,7 +31,9 @@ public class MoviePersonFactory {
     private void persPassIDFact(Person pers){
         System.out.println("Введите Паспортный идентификатор сценариста");
         String entered = scan.nextLine().trim();
+        System.out.println("ok");
         if (!entered.isEmpty()) {
+            System.out.println("ok");
             pers.setPassportID(entered);
         } else persNameFact(pers);
     }

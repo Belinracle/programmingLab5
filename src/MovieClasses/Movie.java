@@ -1,4 +1,7 @@
 package MovieClasses;
+import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
+import org.w3c.dom.ls.LSOutput;
+
 import java.time.LocalDate;
 
 public class Movie{
@@ -48,7 +51,9 @@ public class Movie{
         return "id: " + id + "\n"+
                 "name: " + name +"\n"+
                 "creation date: " + creationDate + "\n"+
-                "Coordination: " + coordinates ;
+                "Coordination: " + coordinates + "\n"+
+                "OscarCount "+oscarsCount+ "\n"+
+                "Screenwriter"+screenwriter.getPassportID().toString();
     }
 
 

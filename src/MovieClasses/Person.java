@@ -1,5 +1,7 @@
 package MovieClasses;
 
+import java.security.spec.RSAOtherPrimeInfo;
+
 public class Person {
     private String name; //Поле не может быть null, Строка не может быть пустой
     private int weight; //Значение поля должно быть больше 0
@@ -9,7 +11,11 @@ public class Person {
     }
     public void setPersonName(String name){ this.name=name;}
     public void setPersonWeight(int i){weight=i;}
-    public void setPassportID(String str){passportID=str;}
+    public void setPassportID(String str){
+        passportID=str;
+        System.out.println("norm");
+        System.out.println(passportID);
+    }
     public void setLocation(Location loc){location=loc;}
 
     public String getName() {
@@ -37,19 +43,10 @@ public class Person {
     }
 
     public boolean equals(Person anPers) {
-        System.out.println("tak blya");
-        boolean b=weight==anPers.weight;
-        System.out.println("tak blyat");
-        System.out.println(passportID);
-        boolean f=passportID.equals(anPers.getPassportID());
-        System.out.println("tak blya");
-        boolean a=name.equals(anPers.name)&&location.getName().equals(anPers.location.getName());
-        System.out.println("tak blya");
-        boolean c=location.getX()==anPers.location.getX()&&location.getY()==anPers.location.getY();
-        System.out.println("tak blya");
-        boolean d=location.getZ().equals(anPers.location.getZ());
-        System.out.println("tak blya");
-        return b;
+        return weight==anPers.weight&&passportID.equals(anPers.getPassportID())&&
+                name.equals(anPers.name)&&location.getName().equals(anPers.location.getName())&&
+        location.getX()==anPers.location.getX()&&location.getY()==anPers.location.getY()&&
+                location.getZ().equals(anPers.location.getZ());
     }
 
     @Override

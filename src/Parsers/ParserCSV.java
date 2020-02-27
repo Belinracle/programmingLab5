@@ -90,6 +90,7 @@ import java.util.List;
                     Person pers= new Person();
                     pers.setPersonName(record.get(ScN));
                     pers.setWeight(Integer.parseInt(record.get(ScW)));
+                    pers.setPassportID(record.get(ScId));
                     Location loc= new Location();
                     loc.setName(record.get(ScLN));
                     loc.setX(Long.parseLong(record.get(ScLX)));
