@@ -8,8 +8,8 @@ import java.util.Scanner;
 
 public class HelpCommand implements Command {
     private BufferedReader reader;
-    String help;
-    public HelpCommand(CommandFetch cf, String path) throws IOException {//TODO не дергать каждый раз файл
+    private String help;
+    HelpCommand(CommandFetch cf, String path) throws IOException {
         File myFile = new File(path);
         reader = new BufferedReader(new FileReader(path));
         help="";
@@ -19,7 +19,7 @@ public class HelpCommand implements Command {
         cf.addCommand("help",this);
     }
     @Override
-    public void execute(ArrayList<String> T) {
+    public void execute(ArrayList<String> T,BufferedReader reader) {
             System.out.println(help);
         }
     }

@@ -1,17 +1,19 @@
 package Collection;
 
 import MovieClasses.Movie;
+import MovieClasses.MpaaRating;
 import MovieClasses.Person;
-import Parsers.Parser;
 import factories.MovieFactory;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.*;
-import java.util.stream.Collector;
 import java.util.stream.Collectors;
 
+/**
+ * реализация интерефейса для работы с ArrayDeque
+ */
 public class DequeMovieCollection implements CollectionShellInterface{
     private ArrayDeque<Movie> cal;
     private LocalDate creationDate;
@@ -25,6 +27,7 @@ public class DequeMovieCollection implements CollectionShellInterface{
     @Override
     public void clear() {
         cal.clear();
+        System.out.println("Коллекция очищена");
     }
 
     @Override
@@ -41,19 +44,29 @@ public class DequeMovieCollection implements CollectionShellInterface{
     }
 
     @Override
-    public void updateByID(Long id) throws IOException {
+    public void updateByID(Long id, BufferedReader reader) throws IOException {
         try {
             while (cal.getLast().getID() != id) {
                 buf.addFirst(cal.removeLast());
             }
-                cal.removeLast();
+            cal.removeLast();
+            if (reader!=null){
+                add(new MovieFactory(reader).updateID(id));
+            }
+            else {
                 add(new MovieFactory().updateID(id));
+            }
                 while (buf.size() != 0) {
                     cal.addLast(buf.removeFirst());
                 }
             }catch (NoSuchElementException e){
             System.out.println("В коллекции нет Фильма с таким ID");
             cal.addAll(buf);
+            buf.clear();
+        }catch(NullPointerException e){
+            System.out.println("Скрипт плохой, давай по новой");
+            cal.addAll(buf);
+            buf.clear();
         }
     }
 
@@ -92,7 +105,8 @@ public class DequeMovieCollection implements CollectionShellInterface{
                 cal.addLast(movie);
             }
         }catch (NoSuchElementException e){
-            System.out.println("Коллекция пуста");
+            System.out.println("Коллекция пуста, добавлю элемент");
+            cal.addLast(movie);
         }
     }
 
@@ -103,7 +117,8 @@ public class DequeMovieCollection implements CollectionShellInterface{
                 cal.addLast(movie);
             }
         }catch (NoSuchElementException e){
-            System.out.println("Коллекция пуста");
+            System.out.println("Коллекция пуста, добавлю элемент");
+            cal.addFirst(movie);
         }
     }
 
@@ -112,8 +127,21 @@ public class DequeMovieCollection implements CollectionShellInterface{
         try {
             List<Long> toDel = cal.stream().filter(x->x.getScreenwriter().equals(person)).map(Movie::getID).collect(Collectors.toList());
             toDel.forEach(this::removeByID);
+            System.out.println("Команда выполнена");
         }catch (NullPointerException e){
-            System.out.println("u blya");
+            System.out.println("плохо");
+        }
+    }
+
+    @Override
+    public void countByMpaaRating(MpaaRating rating) {
+        System.out.println("Количество фильмов с этим MpaaRating= "+cal.stream().filter(x->x.getMpaaRating()==rating).count());
+    }
+
+    @Override
+    public void printAscending() {
+        for(Movie mov:cal){
+            System.out.println(mov.getName());
         }
     }
 
@@ -127,5 +155,4 @@ public class DequeMovieCollection implements CollectionShellInterface{
             cal.addAll(buf);
             buf.clear();
     }
-
 }

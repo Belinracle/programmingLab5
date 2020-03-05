@@ -2,8 +2,10 @@ package commands;
 
 import Collection.CollectionShellInterface;
 
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ClearCommand implements Command{
     private CollectionShellInterface cal;
@@ -11,8 +13,9 @@ public class ClearCommand implements Command{
         cf.addCommand("clear",this);
         this.cal=cal;
     }
+
     @Override
-    public void execute(ArrayList<String> T) throws IOException {
+    public void execute(ArrayList<String> T, BufferedReader reader) {
         cal.clear();
     }
 }

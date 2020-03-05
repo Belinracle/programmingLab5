@@ -3,17 +3,24 @@ package factories;
 import MovieClasses.Location;
 import MovieClasses.Person;
 
-import java.io.IOException;
-import java.util.InputMismatchException;
-import java.util.Scanner;
+import java.io.*;
+
+/**
+ * Класс реализующий создание полностью готового и заполненного экземпляра Person
+ */
 
 public class MoviePersonFactory {
-    private Scanner scan;
-    public MoviePersonFactory(){
-        scan=new Scanner(System.in);
+    private BufferedReader scan;
+    private boolean script;
+    public MoviePersonFactory(){InputStream inputStream = System.in;
+        scan = new BufferedReader(new InputStreamReader(System.in));
+    }
+    public MoviePersonFactory(BufferedReader scan){
+        this.scan=scan;
+        script=true;
     }
 
-    public Person createMoviePerson(){
+    public Person createMoviePerson() throws IOException {
         Person pers = new Person();
         persNameFact(pers);
         persWeightFact(pers);
@@ -21,44 +28,53 @@ public class MoviePersonFactory {
         pers.setLocation(setPersLocation());
         return pers;
     }
-    private void persNameFact(Person pers){
-        System.out.println("Введите имя сценариста");
-        String entered = scan.nextLine().trim();
-        if (!entered.isEmpty()) {
-            pers.setPersonName(entered);
-        } else persNameFact(pers);
-    }
-    private void persPassIDFact(Person pers){
-        System.out.println("Введите Паспортный идентификатор сценариста");
-        String entered = scan.nextLine().trim();
-        System.out.println("ok");
-        if (!entered.isEmpty()) {
-            System.out.println("ok");
-            pers.setPassportID(entered);
-        } else persNameFact(pers);
-    }
-    private void persWeightFact(Person pers) {
-        System.out.println("Введите вес сценариста фильма(должно быть больше 0)");
+    private void persNameFact(Person pers) {
+        String result = "";
+        if (!script) System.out.println("Введите имя сценариста");
         try {
-            String entered=scan.nextLine().trim();
-            while (entered.isEmpty()){
-                persWeightFact(pers);
+            while (result.isEmpty()) {
+                result = scan.readLine().trim();
+                if (result.isEmpty()) {
+                    if (!script) System.out.println("Введите непустую строку");
+                }
             }
-            int result =Integer.parseInt(entered);
-            if(result<0){
-                System.out.println("Введенное вами значение должно быть больше 0");
-                persWeightFact(pers);
-            }
-            else {pers.setWeight(result);}
-        }catch (NumberFormatException e){
-            System.out.println("Введеное значение не того формата");
-            persWeightFact(pers);
+            pers.setPersonName(result);
+        }catch(IOException e){
+            System.out.println(e.getMessage());
         }
     }
+    private void persPassIDFact(Person pers) throws IOException{
+        String result = "";
+        if(!script)System.out.println("Введите pass ID");
+        while (result.isEmpty()) {
+            result = scan.readLine().trim();
+            if (result.isEmpty()) {
+                if(!script)System.out.println("Введите непустую строку");
+            }
+        }
+        pers.setPassportID(result);
+    }
+    private void persWeightFact(Person pers) {
+        Integer result = null;
+        if(!script)System.out.println("Введите вес(Integer)");
+        while (result == null) {
+            try {
+                int i = Integer.parseInt(scan.readLine().trim());
+                if (i>0) {
+                    result = i;
+                } else {
+                    System.out.println("Неверный ввод. Повторите");
+                }
+            } catch (NullPointerException | NumberFormatException | IOException e) {
+                if(!script)System.out.println("Неверный ввод. Повторите");
+            }
+        }
+        pers.setWeight(result);
+    }
 
 
-    private Location setPersLocation(){
-        System.out.println("Заполните поля локации проживания сценариста фильма ");
+    private Location setPersLocation() throws IOException {
+        if(!script)System.out.println("Заполните поля локации проживания сценариста фильма ");
         Location loc = new Location();
         setLocationName(loc);
         setLocationX(loc);
@@ -66,52 +82,52 @@ public class MoviePersonFactory {
         setLocFloat(loc);
         return loc;
     }
-    private void setLocationX(Location loc){
-        System.out.println("Введите координату Х(long)");
-        try {
-            String entered=scan.nextLine().trim();
-            while (entered.isEmpty()){
-                setLocationX(loc);
+    private void setLocationX(Location loc) {
+        Long result = null;
+        if(!script)System.out.println("введите X(Long)");
+        while (result == null) {
+            try {
+                result = Long.parseLong(scan.readLine().trim());
+            } catch (NullPointerException | NumberFormatException |IOException e) {
+                if(!script)System.out.println("Неверный ввод. Повторите");
             }
-            long result =Long.parseLong(entered);
-            loc.setX(result);
-        }catch (NumberFormatException e ){
-            System.out.println("Введеное значение не того формата");
-            setLocationX(loc);
         }
+        loc.setX(result);
     }
     private void setLocationY(Location loc) {
-        System.out.println("Введите координату Y(int)");
-        try {
-            String entered = scan.nextLine().trim();
-            while (entered.isEmpty()) {
-                setLocationY(loc);
+        Integer result = null;
+        if(!script)System.out.println("введите Y(Integer)");
+        while (result == null) {
+            try {
+                result = Integer.parseInt(scan.readLine().trim());
+            } catch (NullPointerException | NumberFormatException | IOException e) {
+                if(!script)System.out.println("Неверный ввод. Повторите");
             }
-            int result = Integer.parseInt(entered);
-            loc.setY(result);
-        } catch (NumberFormatException e) {
-            System.out.println("Введеное значение не того формата");
-            setLocationY(loc);
         }
+        loc.setY(result);
     }
 
-    private void setLocationName(Location loc){
-            System.out.println("Введите название локации(может быть null)");
-            String entered = scan.nextLine().trim();
+    private void setLocationName(Location loc) throws IOException  {
+        if(!script)System.out.println("Введите название локации(может быть null)");
+            String entered = scan.readLine().trim();
             loc.setName(entered);
     }
-    private void setLocFloat(Location loc){
-        System.out.println("Введите координату Z(float)");
-        try {
-            String entered = scan.nextLine().trim();
-            while (entered.isEmpty()) {
-                setLocFloat(loc);
+    private void setLocFloat(Location loc) {
+        Float result = null;
+        if(!script)System.out.println("введите Z(Float)(не более 7 значащих цифр)");
+        while (result == null) {
+            try {
+                String str=scan.readLine().trim();
+                if ((str.length() - str.replaceAll("\\d+", "").length())>7){
+                    System.out.println("Сказано же 7");
+                    throw new NumberFormatException();
+                }
+                result = Float.parseFloat(str);
+            } catch (NullPointerException | NumberFormatException | IOException e) {
+                if(!script)System.out.println("Неверный ввод. Повторите");
             }
-            float result = Float.parseFloat(entered);
-            loc.setZ(result);
-        } catch (NumberFormatException e) {
-            System.out.println("Введеное значение не того формата");
-            setLocFloat(loc);
         }
+        loc.setZ(result);
     }
+
 }

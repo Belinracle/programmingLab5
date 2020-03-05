@@ -1,14 +1,14 @@
 package commands;
 
 import Collection.CollectionShellInterface;
-import MovieClasses.Movie;
 import factories.MovieFactory;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
-
+/**
+ * команда добавления к коллекции элемента
+ */
 public class AddCommand implements Command  {
     private CollectionShellInterface T;
     AddCommand(CollectionShellInterface T, CommandFetch cf){
@@ -17,7 +17,15 @@ public class AddCommand implements Command  {
     }
 
     @Override
-    public void execute(ArrayList<String> str) throws IOException {
-        T.add(new MovieFactory().createMovie(str));
+    public void execute(ArrayList<String> str, BufferedReader reader) throws IOException {
+        try{
+        if(reader!=null){
+            T.add(new MovieFactory(reader).createMovie(str));
+        }
+        else {
+            T.add(new MovieFactory().createMovie(str));
+        }}catch(NullPointerException e){
+            System.out.println("скрипт фигня, давай по новой");
+        }
     }
 }

@@ -4,7 +4,7 @@ import org.w3c.dom.ls.LSOutput;
 
 import java.time.LocalDate;
 
-public class Movie{
+public class Movie implements  Comparable{
     private Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
     private String name; //Поле не может быть null, Строка не может быть пустой
     private Coordinates coordinates; //Поле не может быть null
@@ -49,13 +49,26 @@ public class Movie{
     @Override
     public String toString() {
         return "id: " + id + "\n"+
-                "name: " + name +"\n"+
-                "creation date: " + creationDate + "\n"+
-                "Coordination: " + coordinates + "\n"+
-                "OscarCount "+oscarsCount+ "\n"+
-                "Screenwriter"+screenwriter.getPassportID().toString();
+                "Название: " + name +"\n"+
+                "Дата создания: " + creationDate + "\n"+
+                "Рейтинг: "+mpaaRating+"\n"+
+                "Жанр: "+genre+"\n"+
+                "Координаты: " + "\n"+coordinates + "\n"+
+                "Количество оскаров "+oscarsCount+ "\n"+
+                "Сценарист"+"\n"+screenwriter+"\n";
     }
 
 
+    @Override
+    public int compareTo(Object o) {
+        if (o == null) {
+            return -1;
+        }
+        if (!(o instanceof Movie)) {
+            throw new ClassCastException();
+        }
+        Movie c = (Movie) o;
+        return (name.compareToIgnoreCase(((Movie) o).name));
+    }
 }
 

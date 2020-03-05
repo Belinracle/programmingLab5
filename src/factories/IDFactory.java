@@ -1,18 +1,20 @@
 package factories;
 
 import java.io.*;
-import java.util.Scanner;
 
-public class IDFactory { //TODO подумать , нужно ли передавать путь файла в конструктор
+/**
+ * класс отвечающий за работу с ID
+ */
+public class IDFactory {
     private static long counter;
-    BufferedReader reader;
-    String path;
+    private BufferedReader reader;
+    private String path;
     public IDFactory(String path) throws IOException {
         this.path=path;
         reader = new BufferedReader(new FileReader(path));
         counter= Long.parseLong(reader.readLine());
     }
-    public static long createID() throws IOException {
+    static long createID(){
         return ++counter;
     }
     public static long getCurrentID(){

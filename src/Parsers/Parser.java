@@ -1,8 +1,11 @@
 package Parsers;
 
-import Collection.CollectionShellInterface;
+import java.io.IOException;
 
+/**
+ * Интерфейс для работы различных парсеров
+ */
 public interface Parser {
-    public String ser ();
-    public void deSer(String path);
+    String ser ();
+    void deSer(String path) throws IOException;
 }

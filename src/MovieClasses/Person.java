@@ -13,8 +13,6 @@ public class Person {
     public void setPersonWeight(int i){weight=i;}
     public void setPassportID(String str){
         passportID=str;
-        System.out.println("norm");
-        System.out.println(passportID);
     }
     public void setLocation(Location loc){location=loc;}
 
@@ -51,9 +49,9 @@ public class Person {
 
     @Override
     public String toString() {
-        String str="Имя сценариста:" +name+"\n"+
+        String str="Имя сценариста: " +name+"\n"+
                 "Его вес: " +weight+"\n"+
-                "Его паспортный идентификатор" +passportID+"\n"+
+                "Его паспортный идентификатор: " +passportID+"\n"+
                 "Информация о его месте положения: "+location.toString() ;
         return str;
     }

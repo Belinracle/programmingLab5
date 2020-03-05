@@ -1,11 +1,12 @@
 package commands;
 
-import java.io.FileNotFoundException;
+import java.io.BufferedReader;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.List;
 
+/**
+ * интерфейс для подключения команд
+ */
 public interface  Command {
-    public void execute(ArrayList<String> T) throws IOException;
+    void execute(ArrayList<String> T, BufferedReader reader) throws IOException;
 }

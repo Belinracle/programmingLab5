@@ -2,43 +2,47 @@ package factories;
 
 
 import MovieClasses.*;
-import com.sun.xml.internal.ws.api.model.wsdl.WSDLOutput;
-import org.w3c.dom.ls.LSOutput;
-
 import java.io.*;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
+import java.util.*;
 
-import java.util.IdentityHashMap;
-import java.util.List;
-import java.util.Scanner;
-import java.util.logging.SocketHandler;
+/**
+ * Класс предоставляющий метод для создания готового и заполненного экземпляра класса Movie
+ */
 
 public class MovieFactory {
     private BufferedReader scan;
     private Movie movie;
     private ArrayList<String> par;
+    private boolean script;
+    public String path;
     public MovieFactory(){
-        InputStream inputStream = System.in;
-        Reader inputStreamReader = new InputStreamReader(inputStream);
-        scan = new BufferedReader(inputStreamReader);
+        scan = new BufferedReader(new InputStreamReader(System.in));
         movie = new Movie();
+    }
+    public MovieFactory(BufferedReader scan){
+        try {
+            this.scan = scan;
+            script = true;
+            movie = new Movie();
+        }catch(NullPointerException e){
+            System.out.println("ploho");
+        }
     }
 
     public Movie createMovie(ArrayList<String> T) throws IOException {
-        par=T;
-        movie.setID(IDFactory.createID());
-        setMovieName();
-        setMovieOscarCount();
-        Coordinates coords = new Coordinates();
-        setMovieCoordsX(coords);
-        setMovieCoordsY(coords);
-        movie.setCoordinates(coords);
-        setMovieGenre();
-        setMovieMpaaRating();
-        setMoviePerson();
-        System.out.println("Спасибо, фильм создан");
-        return movie;
+            par=T;
+            movie.setID(IDFactory.createID());
+            setMovieName();
+            setMovieOscarCount();
+            Coordinates coords = new Coordinates();
+            setMovieCoordsX(coords);
+            setMovieCoordsY(coords);
+            movie.setCoordinates(coords);
+            setMovieGenre();
+            setMovieMpaaRating();
+            setMoviePerson();
+            System.out.println("Спасибо, фильм создан");
+                return movie;
     }
     public Movie updateID(Long ID) throws IOException {
         movie.setID(ID);
@@ -56,86 +60,86 @@ public class MovieFactory {
     }
 
     private void setMovieName() throws IOException {
-        if (par!=null){
+        if (par.size()>1){
             movie.setName((par.get(1)));
         }
         else {
-            System.out.println("Введите название фильма");
+            if(!script)System.out.println("Введите название фильма");
             String entered = scan.readLine().trim();
-                if (!entered.isEmpty()) {
-                    movie.setName(entered);
-                } else setMovieName();
+            if (!entered.isEmpty()) {
+                movie.setName(entered);
+            } else setMovieName();
         }
     }
 
     private void setMovieOscarCount(){
-        if (par!=null&&par.size()>2){
-            movie.setOscarsCount((Integer.parseInt(par.get(2))));
-        }
-        else
-        {
-            System.out.println("Введите количество оскаров фильма(должно быть больше 0)");
-            try {
-                String entered=scan.readLine().trim();
-                while (entered.isEmpty()){
-                    setMovieOscarCount();
+        try {
+        if (par != null && par.size() > 2) {
+            movie.setOscarsCount((Integer.parseInt(par.get(2))));}
+            Integer result = null;
+            while (result == null) {
+                if(!script)System.out.println("Введите количество оскаров >0(Integer)");
+                result = Integer.parseInt(scan.readLine().trim());
+                if (result <= 0) {
+                    if(!script)System.out.println("Введенное вами значение должно быть >0");
+                    result = null;
                 }
-                int result =Integer.parseInt(entered);
-                if(result<0){
-                    System.out.println("Введенное вами значение должно быть больше 0");
-                    setMovieOscarCount();
-                }
-                else movie.setOscarsCount(result);
-            }catch (NumberFormatException | IOException e){
-                System.out.println("Введеное значение не того формата");
+            }
+            movie.setOscarsCount(result);
+        }catch (NumberFormatException | NullPointerException | IOException e){
+            if(!script)System.out.println("Введенное значение не того формата");
+                if(par.size() > 2){
+                par.remove(2);}
                 setMovieOscarCount();
             }
-        }
     }
 
+
     private void setMovieCoordsX(Coordinates coords) {
-        System.out.println("Введите значение координаты Х(должно быть больше -928)");
-        try {
-            String entered = scan.readLine().trim();
-            while (entered.isEmpty()) {
-                setMovieCoordsX(coords);
+        try{
+        Integer result = null;
+        while (result == null) {
+            if(!script)System.out.println("Введите координату X(Integer)больше -928");
+            result = Integer.parseInt(scan.readLine().trim());
+            if (result <= -928) {
+                if(!script)System.out.println("Введенное вами значение должно быть больше -928");
+                result = null;
             }
-            Integer result = Integer.parseInt(entered);
-            if (result < -928) {
-                System.out.println("Введенное вами значение должно быть больше -928");
-                setMovieCoordsX(coords);
-            } else coords.setX(result);
-        } catch (NumberFormatException | IOException e) {
-            System.out.println("Введеное значение не того формата");
+        }
+        coords.setX(result);
+    }catch (NumberFormatException | NullPointerException | IOException e){
+            if(!script)System.out.println("Введенное значение не того формата");
             setMovieCoordsX(coords);
         }
     }
     private void setMovieCoordsY(Coordinates coords){
-            System.out.println("Введите значение координаты Y(должно быть меньше 982)");
-            try {
-                String entered=scan.readLine().trim();
-                while (entered.isEmpty()){
-                    setMovieCoordsY(coords);
+        try{
+            Float result = null;
+            while (result == null) {
+                if(!script)System.out.println("Введите координату Y(Float)меньше 982(не более 7 значащих цифр)");
+                String str=scan.readLine().trim();
+                if ((str.length() - str.replaceAll("\\d+", "").length())>7){
+                    System.out.println("Сказано же 7");
+                    throw new NumberFormatException();
                 }
-                float result=Float.parseFloat(entered);
-                if(result>982){
-                    System.out.println("Введенное вами значение должно быть меньше 982");
-                    setMovieCoordsY(coords);
+                else {
+                    result = Float.parseFloat(str);
+                    if (result >= 982) {
+                        if (!script) System.out.println("Введенное вами значение должно быть меньше 982");
+                        result = null;
+                    }
                 }
-                else   coords.setY(result);
-            }catch (NumberFormatException | IOException e) {
-                System.out.println("Введеное значение не того формата");
-                setMovieCoordsY(coords);
             }
+            coords.setY(result);
+        }catch (NumberFormatException | NullPointerException | IOException e){
+            if(!script)System.out.println("Введенное значение не того формата");
+            setMovieCoordsY(coords);
+        }
     }
 
-
-
-
-    private void setMovieGenre(){
-        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"WESTERN" +"\n" +"COMEDY"+"\n"+"MUSICAL"+"\n"+"SCIENCE_FICTION");
-        Scanner scan=new Scanner(System.in);
-        String buf = scan.nextLine().toLowerCase();
+    private void setMovieGenre()  throws IOException{
+        if(!script)System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"WESTERN" +"\n" +"COMEDY"+"\n"+"MUSICAL"+"\n"+"SCIENCE_FICTION");
+        String buf = scan.readLine().toLowerCase();
         switch (buf) {
             case "western":
                 movie.setMovieGenre(MovieGenre.WESTERN);
@@ -154,17 +158,16 @@ public class MovieFactory {
                     movie.setMovieGenre(null);
                 }
                 else {
-                    System.out.println("Пожалуйсто введите один из предложенных энамов");
+                    if(!script)System.out.println("Пожалуйсто введите один из предложенных энамов");
                     setMovieGenre();
                 }
         }
     }
 
-    private void setMovieMpaaRating() {
-        System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"G" +"\n" +"PG_13"+"\n"+"R"+"\n"+"NC_17");
+    private void setMovieMpaaRating() throws IOException {
+        if(!script)System.out.println("Введите один из этих энамов, которые хрен знает за что отвечает, потому что я не знаю английский, простите"+"\n"+"G" +"\n" +"PG_13"+"\n"+"R"+"\n"+"NC_17");
         String buf;
-        Scanner scan = new Scanner(System.in);
-        do{buf = scan.nextLine().trim().toLowerCase();}
+        do{buf = scan.readLine().trim().toLowerCase();}
         while(buf.isEmpty());
         switch (buf) {
             case "g":
@@ -180,13 +183,18 @@ public class MovieFactory {
                 movie.setMpaaRating(MpaaRating.NC_17);
                 break;
             default:
-                System.out.println("Пожалуйсто введите один из предложенных энамов");
+                if (!script)System.out.println("Пожалуйсто введите один из предложенных энамов");
                 setMovieMpaaRating();
         }
     }
 
-    private void setMoviePerson() {
+    private void setMoviePerson() throws IOException {
+        if (script){
+            movie.setPerson(new MoviePersonFactory(scan).createMoviePerson());
+        }
+        else{
         movie.setPerson(new MoviePersonFactory().createMoviePerson());
+        }
     }
 }
 
