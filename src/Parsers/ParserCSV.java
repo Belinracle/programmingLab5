@@ -23,6 +23,10 @@ import java.util.List;
             this.deq = deq;
         }
 
+    /**
+     * Сериализует коллекцию и возвращает в строчном виде
+     * @return
+     */
         public String ser() {
             try {
                 StringBuilder sb = new StringBuilder();
@@ -57,6 +61,11 @@ import java.util.List;
             return null;
         }
 
+    /**
+     * десериализует содерживое файла и помещает в коллекцию
+     * @param path
+     * @throws IOException
+     */
         public void deSer(String path) throws IOException {
             String id = "id";
             String name = "Name";

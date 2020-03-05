@@ -15,6 +15,13 @@ public class  CommandFetch {
         hook = new Thread(() -> System.out.println("Работа программы прервана. Изменения не сохранены"));
         Runtime.getRuntime().addShutdownHook(hook);
     }
+
+    /**
+     * метод, запускающий выполнение команд
+     * @param str= строка, введенная пользователем
+     * @param reader= если скрипт, то это то откуда читать
+     * @throws IOException
+     */
     void run(String str, BufferedReader reader) throws IOException {
         try {
             ArrayList<String> words = new ArrayList<>(Arrays.asList(str.split(" ")));
@@ -27,6 +34,12 @@ public class  CommandFetch {
             System.out.println("Неизвестная команда");
         }
     }
+
+    /**
+     * метод для добавления команды в HashMap
+     * @param str название команды
+     * @param cmd экземпляр команды
+     */
     public void addCommand(String str,Command cmd){
         commandMap.put(str,cmd);
     }

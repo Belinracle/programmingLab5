@@ -19,6 +19,11 @@ public class MovieFactory {
         scan = new BufferedReader(new InputStreamReader(System.in));
         movie = new Movie();
     }
+
+    /**
+     * конструктор, который используется при работе с скриптом
+     * @param scan
+     */
     public MovieFactory(BufferedReader scan){
         try {
             this.scan = scan;
@@ -44,6 +49,13 @@ public class MovieFactory {
             System.out.println("Спасибо, фильм создан");
                 return movie;
     }
+
+    /**
+     * метод для создания фильма с указанным ID
+     * @param ID
+     * @return
+     * @throws IOException
+     */
     public Movie updateID(Long ID) throws IOException {
         movie.setID(ID);
         setMovieName();

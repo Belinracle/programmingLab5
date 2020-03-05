@@ -15,6 +15,11 @@ public class MoviePersonFactory {
     public MoviePersonFactory(){InputStream inputStream = System.in;
         scan = new BufferedReader(new InputStreamReader(System.in));
     }
+
+    /**
+     * Конструктор, использующийся для работы с скриптом
+     * @param scan
+     */
     public MoviePersonFactory(BufferedReader scan){
         this.scan=scan;
         script=true;

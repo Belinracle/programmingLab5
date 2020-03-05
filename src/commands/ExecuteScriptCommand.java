@@ -30,7 +30,7 @@ public class ExecuteScriptCommand implements Command {
                     cf.run(i,scan);
                     i = "";
                 }
-        } catch (NoSuchFileException e) {
+        } catch (FileNotFoundException e) {
             System.out.println("Нет такого файла блин");
         }catch (NullPointerException e){
             System.out.println("Скрипт неоч, давай по новой");
